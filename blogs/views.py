@@ -19,8 +19,8 @@ def blog_post(request):
         if request.user.is_authenticated:
             experience = request.POST.get('experience')
             image = request.FILES.get('image')
-            place = request.get('place')
-            rating = request.get('rating')
+            place = request.POST.get('place')
+            rating = request.POST.get('rating')
             posted_by = request.user
             
             blog = BlogPost(experience=experience, image=image, place=place, rating=rating, posted_by=posted_by)
