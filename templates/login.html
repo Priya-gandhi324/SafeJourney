@@ -1,0 +1,72 @@
+
+{% load static tailwind_tags %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SafeJourney</title>
+  <link rel="icon" href="../static/images/logo.png" type="image/icon type">
+  <!-- Include Tailwind CSS stylesheets -->
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.16/dist/tailwind.min.css" rel="stylesheet">
+  <!-- Your custom styles -->
+  <style>
+    .navbar {
+      transition: background-color 0.3s ease;
+    }
+  </style>
+</head>
+<body class="bg-cover bg-center bg-fixed bg-no-repeat" style="background-image: url('../static/images/home_slider.jpg');">
+  <!-- Sticky Navbar -->
+  <nav class="navbar fixed top-0 left-0 w-full p-4 bg-gray-700 bg-opacity-50">
+    <div class="container mx-auto flex justify-between items-center">
+      <div class="flex items-center">
+        <img src="../static/images/logo2.svg" class="h-14 mr-3" alt="Safe Journey Logo" />
+        <div class="text-white text-lg font-bold">SafeJourney</div>
+      </div>
+      <div class="flex items-center space-x-4">
+        <a href="../" class="text-white">Home</a>
+        <a href="register" class="text-white">Register</a>
+        <a href="#" class="text-white">Login</a>
+        <a href="#" class="text-white">Blogs</a>
+        <a href="#" class="text-white">Tips</a>
+        <a href="#" class="text-white">Contact Us</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Landing Page -->
+  <form action="login" method="POST">
+    {% csrf_token %}
+    <div class="flex items-center justify-center h-screen">
+      <div class="max-w-sm w-full p-8 bg-white bg-opacity-25 rounded-lg shadow-lg">
+        <div class="relative mb-6 flex-col space-y-4">
+          <input type="text" name="username" class="w-full px-4 py-2 border bg-gray-100 rounded-lg placeholder-gray-500 focus:outline-none focus:ring focus:border-blue-300" placeholder="Username">
+          <input type="password" name="password" class="w-full px-4 py-2 border bg-gray-100 rounded-lg placeholder-gray-500 focus:outline-none focus:ring focus:border-blue-300" placeholder="Password">
+        </div>
+        <button class="w-full px-4 py-2 bg-black text-white rounded-lg">SUBMIT</button>
+      </div>
+    </div>
+  </form>
+
+  <div >
+    {% for msg in messages %}
+    <script>
+      alert('{{ msg }}');
+    </script>
+    {% endfor %}
+  </div>
+  
+  <script>
+    window.addEventListener('scroll', () => {
+      const navbar = document.querySelector('.navbar');
+      if (window.scrollY > 0) {
+        navbar.classList.add('bg-scroll');
+      } else {
+        navbar.classList.remove('bg-scroll');
+      }
+    });
+  </script>
+</body>
+</html>

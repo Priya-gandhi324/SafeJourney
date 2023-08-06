@@ -1,0 +1,301 @@
+{% load static tailwind_tags %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SafeJourney</title>
+  <link rel="icon" href="static/images/logo.png" type="image/icon type">
+  <!-- Include Tailwind CSS stylesheets -->
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.16/dist/tailwind.min.css" rel="stylesheet">
+  <!-- Your custom styles -->
+  <style>
+    .navbar {
+      transition: background-color 0.3s ease;
+    }
+  
+    .file-input {
+      position: absolute;
+      left: 0;
+      top: 0;
+      opacity: 0;
+    }
+    
+    .custom-file-input {
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body class="bg-cover bg-center bg-fixed bg-no-repeat" style="background-image: url('static/images/home_slider.jpg');">
+  <!-- Sticky Navbar -->
+  <nav class="navbar fixed top-0 left-0 w-full p-4 bg-gray-700 bg-opacity-50 z-10">
+    <div class="container mx-auto flex justify-between items-center">
+      <div class="flex items-center">
+        <img src="static/images/logo2.svg" class="h-14 w-100 mr-3" alt="Safe Journey Logo" />
+        <div class="text-white text-lg font-bold">SafeJourney</div>
+      </div>
+      <div class="flex items-center space-x-4">
+        <a href="#" class="text-white">Home</a>
+
+        {% if user.is_authenticated %}
+          <a href="#" class="text-white">Hello, {{ user.first_name }}</a>
+          <a href="accounts/logout" class="text-white">Logout</a>
+        {% else %}
+          <a href="accounts/register" class="text-white">Register</a>
+          <a href="accounts/login" class="text-white">Login</a>
+        {% endif %}
+
+        <a href="#blogs" class="text-white">Blogs</a>
+        <a href="#tips" class="text-white">Tips</a>
+        <a href="#contact" class="text-white">Contact Us</a>
+      </div>
+    </div>
+  </nav>
+  
+  <!-- Landing Page -->
+<form action="blog_post" method="POST" enctype="multipart/form-data">
+  {% csrf_token %}
+  <div class="flex items-center justify-center h-screen">
+    <div class="max-w-lg w-full p-8 bg-white bg-opacity-25 rounded-lg shadow-lg">
+      <div class="relative mb-6 flex-row">
+        <input type="text" name="experience" class="w-full px-4 py-2 border bg-gray-100 rounded-lg placeholder-gray-500 focus:outline-none focus:ring focus:border-blue-300" placeholder="Enlighten us with your journey">
+        <div class="cursor-pointer absolute top-1/2 right-0 transform -translate-y-1/2 px-4 py-2 bg-black text-white rounded-lg">
+          <input type="file" name="image" accept="image/*" class="file-input cursor-pointer">
+          <div class="custom-file-input cursor-pointer">+</div>
+        </div>
+      </div>
+      <div class="relative mb-6 flex-row">
+        <input type="text" name="place" class="w-1/3 px-4 py-2 border bg-gray-100 rounded-lg placeholder-gray-500 focus:outline-none focus:ring focus:border-blue-300" placeholder="Place">
+        <input type="text" name="rating" class="w-1/3 px-4 py-2 border bg-gray-100 rounded-lg placeholder-gray-500 focus:outline-none focus:ring focus:border-blue-300" placeholder="Rate out of 5">
+      </div>
+      <button class="w-full px-4 py-2 bg-black text-white rounded-lg">POST</button>
+    </div>
+  </div>
+</form>
+
+    <!-- List of Blogs -->
+    <div id="blogs" class="flex flex-col items-center -top-8 gap-4">
+      {% for blog in blogs %}
+      <div class="w-1/2 mb-6 p-4 bg-white rounded-lg shadow-lg">
+        <img src={{blog.image.url}} alt="Blog Image" class="w-full h-full object-cover mb-4 rounded-lg">
+        <div class="text-2xl font-open-sans-bold mb-2">{{blog.place}}</div>
+        <div class="text-lg font-open-sans-semibold mb-4">{{blog.experience}}</div>
+        <div class="mb-4 font-open-sans"><i>Posted by:</i> {{blog.posted_by}}</div>
+        <div class="flex items-center">
+          {% if blog.rating is 1 %}
+          <div class="flex items-center space-x-1">
+            <svg class="w-4 h-4 text-yellow-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
+                <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
+            </svg>
+            <svg class="w-4 h-4 text-gray-300 dark:text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
+              <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
+            </svg>
+            <svg class="w-4 h-4 text-gray-300 dark:text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
+              <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
+            </svg>
+            <svg class="w-4 h-4 text-gray-300 dark:text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
+              <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
+            </svg>
+            <svg class="w-4 h-4 text-gray-300 dark:text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
+              <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
+            </svg>
+          </div>
+
+            {% elif blog.rating is 2 %}
+            <div class="flex items-center space-x-1">
+              <svg class="w-4 h-4 text-yellow-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
+                  <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
+              </svg>
+              <svg class="w-4 h-4 text-yellow-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
+                  <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
+              </svg>
+              <svg class="w-4 h-4 text-gray-300 dark:text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
+                <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
+              </svg>
+              <svg class="w-4 h-4 text-gray-300 dark:text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
+                <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
+              </svg>
+              <svg class="w-4 h-4 text-gray-300 dark:text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
+                <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
+              </svg>
+            </div>
+
+            {% elif blog.rating is 3 %}
+            <div class="flex items-center space-x-1">
+              <svg class="w-4 h-4 text-yellow-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
+                  <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
+              </svg>
+              <svg class="w-4 h-4 text-yellow-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
+                  <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
+              </svg>
+              <svg class="w-4 h-4 text-yellow-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
+                  <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
+              </svg>
+              <svg class="w-4 h-4 text-gray-300 dark:text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
+                <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
+              </svg>
+              <svg class="w-4 h-4 text-gray-300 dark:text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
+                <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
+              </svg>
+            </div>
+
+            {% elif blog.rating is 4 %}
+            <div class="flex items-center space-x-1">
+              <svg class="w-4 h-4 text-yellow-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
+                  <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
+              </svg>
+              <svg class="w-4 h-4 text-yellow-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
+                  <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
+              </svg>
+              <svg class="w-4 h-4 text-yellow-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
+                  <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
+              </svg>
+              <svg class="w-4 h-4 text-yellow-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
+                  <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
+              </svg>
+              <svg class="w-4 h-4 text-gray-300 dark:text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
+                  <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
+              </svg>
+            </div>
+
+            {% else %}
+            <div class="flex items-center space-x-1">
+              <svg class="w-4 h-4 text-yellow-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
+                  <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
+              </svg>
+              <svg class="w-4 h-4 text-yellow-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
+                  <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
+              </svg>
+              <svg class="w-4 h-4 text-yellow-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
+                  <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
+              </svg>
+              <svg class="w-4 h-4 text-yellow-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
+                  <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
+              </svg>
+              <svg class="w-4 h-4 text-yellow-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
+                <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z"/>
+              </svg>
+            </div>
+          {% endif %}
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+
+    <!-- Tips -->
+    <div id="tips" class="w-full mt-10 p-4 bg-white">
+      <div class="flex px-20 py-20">
+        <div class="relative flex-row space-y-5">
+          <div class="flex space-x-5">
+            <img src="static/images/tips2.jpg" alt="tips1" class="w-1/3 h-1/4 object-cover mb-4 rounded-lg">
+            <div class="flex-col space-y-5 w-1/2">
+              <p class="text-3xl font-open-sans-bold">Pack Light, Pack Smart</h1>
+              <p class="text-lg font-open-sans-bold">Streamline your essentials for hassle-free travel; versatile clothing and essentials save space and time.</p>
+            </div>
+          </div>
+          <div class="flex space-x-5">
+            <img src="static/images/tips1.jpg" alt="tips1" class="w-1/3 h-1/4 object-cover mb-4 rounded-lg">
+            <div class="flex-col space-y-5 w-1/2">
+              <p class="text-3xl font-open-sans-bold">Local Flavors, Global Experiences</h1>
+              <p class="text-lg font-open-sans-bold">Immerse yourself in local cuisine and culture to truly embrace the destination's unique charm.</p>
+            </div>
+          </div>
+          <div class="flex space-x-5">
+            <img src="static/images/tips3.jpg" alt="tips1" class="w-1/3 h-1/4 object-cover mb-4 rounded-lg">
+            <div class="flex-col space-y-5 w-1/2">
+              <p class="text-3xl font-open-sans-bold">Capture Memories, Unplug Moments</h1>
+              <p class="text-lg font-open-sans-bold">Balance between capturing memories and living in the moment; cherish both digital and real-life experiences.</p>
+            </div>
+          </div>
+        </div>
+        <div class="relative mb-6 flex-row ml-10">
+          <img src="static/images/offer.jpg" alt="tips1" class="w-full h-full object-cover rounded-lg">
+          <div class="absolute bottom-0 left-0 right-0 text-center bg-red-700 bg-opacity-50 text-white py-10 h-1/4 text-4xl font-open-sans-bold">So what are you waiting for?</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div id="contact" class="w-full h-full bg-cover bg-center bg-fixed bg-no-repeat" style="background-image: url('static/images/footer.jpg');">
+      <p class="text-4xl font-open-sans-bold text-center py-20 text-white">Subscribe to our newsletter to get the latest posts</h1>
+      <p class="text-lg font-open-sans-bold text-center -mt-10 text-gray-300">join our database now</h1>
+        <form action="subscribe" method="POST">
+          {% csrf_token %}
+            <div class="flex w-full p-20 rounded-lg shadow-lg space-x-10">
+              <input type="text" name="name" class="w-1/4 px-4 py-2 bg-white bg-opacity-50 placeholder-white placeholder::italic" placeholder="Name">
+              <input type="email" name="email" class="w-1/2 px-4 py-2 bg-white bg-opacity-50 placeholder-white" placeholder="Your email">
+              <button class="w-1/4 px-4 py-2 text-xl bg-white bg-opacity-50 text-white font-oswald-semibold rounded-2xl">SUBSCRIBE</button>
+          </div>
+        </form>
+      <div class="flex px-20 py-10 space-x-20 items-center justify-center">
+        <div class="flex-col items-center justify-center">
+          <div class="flex flex-col items-center">
+            <img src="static/images/sign.svg" alt="tips1" class="w-32 h-auto mb-4">
+            <p class="text-3xl font-open-sans-bold text-gray-200 text-center">GIVE US A CALL</h1>
+            <p class="text-lg font-open-sans-bold  text-gray-200 text-center">Office Landline: +91 1332 279322</p>
+            <p class="text-lg font-open-sans-bold  text-gray-200 text-center">Mobile: +91 76562 59332</p>
+          </div>
+        </div>
+        <div class="flex-col items-center justify-center">
+          <div class="flex flex-col items-center">
+            <img src="static/images/trekking.svg" alt="tips1" class="w-32 h-auto mb-4">
+            <p class="text-3xl font-open-sans-bold text-gray-200 text-center">COME & DROP BY</h1>
+            <p class="text-lg font-open-sans-bold  text-gray-200 text-center">126, New York Street 28, </p>
+            <p class="text-lg font-open-sans-bold  text-gray-200 text-center">NYC</p>
+          </div>
+        </div>
+        <div class="flex-col items-center justify-center">
+          <div class="flex flex-col items-center">
+            <img src="static/images/around.svg" alt="tips1" class="w-32 h-auto mb-4">
+            <p class="text-3xl font-open-sans-bold text-gray-200 text-center">Send us a message</h1>
+            <p class="text-lg font-open-sans-bold  text-gray-200 text-center">safejourney@gmail.com</p>
+            <p class="text-lg font-open-sans-bold  text-gray-200 text-center">info@safejourney.com</p>
+          </div>
+        </div>
+      </div> 
+
+    <div >
+      {% for msg in messages %}
+      <script>
+        alert('{{ msg }}');
+    </script>
+      {% endfor %}
+    </div>
+    
+  
+    <script>
+      window.addEventListener('scroll', () => {
+        const navbar = document.querySelector('.navbar');
+        if (window.scrollY > 0) {
+          navbar.classList.add('bg-scroll');
+        } else {
+          navbar.classList.remove('bg-scroll');
+        }
+      });
+
+      const imageInput = document.getElementById('imageInput');
+      imageInput.addEventListener('change', () => {
+        const file = imageInput.files[0];
+        if (file) {
+          const preview = document.querySelector('.w-40');
+          preview.innerHTML = `<img src="${URL.createObjectURL(file)}" alt="Selected Image" class="w-full h-full object-cover rounded-lg">`;
+        }
+      });
+
+      const navLinks = document.querySelectorAll('nav a');
+    
+      navLinks.forEach(link => {
+        link.addEventListener('click', function (event) {
+          event.preventDefault(); // Prevent default link behavior
+          const targetId = link.getAttribute('href');
+          const targetSection = document.querySelector(targetId);
+          if (targetSection) {
+            targetSection.scrollIntoView({ behavior: 'smooth' });
+          }
+        });
+      });
+
+    </script>
+  </body>
+  </html>
