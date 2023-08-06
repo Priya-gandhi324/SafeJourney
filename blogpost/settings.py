@@ -63,7 +63,10 @@ ROOT_URLCONF = 'blogpost.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR), 'templates'],
+        'DIRS': [
+            os.path.join(BASE_DIR, 'theme', 'templates'),
+            os.path.join(BASE_DIR, 'templates'),
+            ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -124,12 +127,6 @@ USE_I18N = True
 
 USE_TZ = True
 
-
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/4.2/howto/static-files/
-
-STATIC_URL = 'static/'
-
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
@@ -146,6 +143,11 @@ NPM_BIN_PATH = r'C:\Program Files\nodejs\npm.cmd'
 MEDIA_URL = ''
 MEDIA_ROOT = os.path.join(BASE_DIR, 'theme')
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'theme/static')
-STATIC_URL = '/theme/static/'
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'theme', 'static'),
+    os.path.join(BASE_DIR, 'static'),
+]
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_URL = '/static/'
 django_heroku.settings(locals())
