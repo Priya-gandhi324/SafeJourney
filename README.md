@@ -3,7 +3,7 @@ This is a fully functional blogging application built using the Django framework
 
 Live Demo of the app: https://safejourney-e56774b9af44.herokuapp.com/
 
-## TECH STACK
+## Tech Stack
 * **Frontend:** HTML, Tailwind CSS, JavaScript
 * **Backend:** Python, Django
 * **Database:** PostgreSQL
