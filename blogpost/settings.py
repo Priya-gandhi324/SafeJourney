@@ -82,20 +82,23 @@ TEMPLATES = [
 WSGI_APPLICATION = 'blogpost.wsgi.application'
 
 
-# Database
-# https://docs.djangoproject.com/en/4.2/ref/settings/#databases
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': '<DATABASE>',
+#         'USER': '<USER>',
+#         'PASSWORD': '<PASSWORD>',
+#         'HOST': '<HOST>',
+#         'PORT': '5432',
+#     }
+# }
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'dcjnq5b2j786pb',
-        'USER': 'onsrgfjykmqbub',
-        'PASSWORD': '4f95c5e82650fc21c0875480577596a0e766a05dadcd671b3a206a288619c31f',
-        'HOST': 'ec2-3-92-151-217.compute-1.amazonaws.com',
-        'PORT': '5432',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
