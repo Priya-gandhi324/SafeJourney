@@ -3,10 +3,10 @@ This is a fully functional blogging application built using the Django framework
 
 Live Demo of the app: https://safejourney-e56774b9af44.herokuapp.com/
 
-### TECH STACK
-* Frontend: HTML, Tailwind CSS, JavaScript
-* Backend: Python, Django
-* Database: PostgreSQL
+## TECH STACK
+* **Frontend:** HTML, Tailwind CSS, JavaScript
+* **Backend:** Python, Django
+* **Database:** PostgreSQL
 
 ## Features
 1. **User Registration and Authentication:** Users can create accounts, log in, and manage their profiles.
