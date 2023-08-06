@@ -14,3 +14,4 @@ Live Demo of the app: https://safejourney-e56774b9af44.herokuapp.com/
 3. **Location Tagging:** Tag your travel experiences with the location where they occurred.
 4. **Social Sharing:** Share your travel stories on various social media platforms with just a click.
 5. **Responsive Design:** Enjoy a seamless user experience on desktop, tablet, and mobile devices.
+6. **Subscribe to Newsletter:** Stay up-to-date with the latest travel stories and updates by subscribing to our newsletter.
