@@ -1,8 +1,6 @@
 # SafeJourney
 This is a fully functional blogging application built using the Django framework. The web application allows users to share their travel experiences through engaging blog posts.
 
-Live Demo of the app: https://safejourney-e56774b9af44.herokuapp.com/
-
 ## Tech Stack
 * **Frontend:** HTML, Tailwind CSS, JavaScript
 * **Backend:** Python, Django
