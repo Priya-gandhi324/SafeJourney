@@ -1,4 +1,4 @@
-# SafeJourney
+# #SafeJourney
 This is a fully functional blogging application built using the Django framework. The web application allows users to share their travel experiences through engaging blog posts.
 
 ## Tech Stack
